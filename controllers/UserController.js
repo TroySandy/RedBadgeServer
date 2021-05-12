@@ -20,7 +20,7 @@ router.get("/", validateJWT, (req, res) => {
     },
   });
 });
-
+//troy
 router.get("/:id", async (req, res) => {
   try {
     let user = await User.findByPk(req.params.id);
