@@ -32,7 +32,7 @@ const validateJWT = async (req, res, next) => {
           req.user = foundUser;
           next();
         } else {
-          res.status(400).send({ messagfe: "Not Authorized" });
+          res.status(400).send({ message: "Not Authorized" });
         }
       } else {
         res.status(401).send({ message: "Invalid token" });

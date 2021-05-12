@@ -2,44 +2,46 @@ const db = require("../db");
 const { DataTypes } = require("sequelize");
 
 const User = db.define("user", {
+  id: {
+    type: DataTypes.UUID,
+    primaryKey: true,
+    defaultValue: DataTypes.UUIDV4,
+    allowNull: false,
+  },
   firstName: {
     type: DataTypes.STRING,
     allowNull: false,
-    // validate: {
-    //   isAlpha: true,
-    // }
+    validate: {
+      isAlpha: true,
+    }
   },
   lastName: {
     type: DataTypes.STRING,
     allowNull: false,
-    // validate: {
-    //   isAlpha: true,
-    // }
+    validate: {
+      isAlpha: true,
+    }
   },
   username: {
     type: DataTypes.STRING,
     allowNull: false,
-    isUnique: true,
-    // validate: {
-    //   isAlphanumeric: true,
-    //   len: [2,10]
-    // }
+    unique: true,
+    validate: {
+      isAlphanumeric: true,
+      len: [2,10]
+    }
   },
   email: {
     type: DataTypes.STRING,
     allowNull: false,
-    isUnique: true,
-    // validate: {
-    //   isEmail: true
-    // }
+    unique: true,
+    validate: {
+      isEmail: true
+    }
   },
   password: {
     type: DataTypes.STRING,
     allowNull: false,
-    // validate: {
-    //   isAlphanumeric: true,
-    //   len: [2,20],
-    // }
   },
   isAdmin: {
     type: DataTypes.BOOLEAN,
