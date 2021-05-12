@@ -1,0 +1,14 @@
+POST http://localhost:4000/user/register HTTP/1.1
+content-type: application/json
+
+{
+    "firstName": "Troy",
+    "lastName": "Sandy",
+    "email": "troysandy16@gmail.com",
+    "username": "TSandy16",
+    "password": "BetaDog"
+}
+
+GET http://localhost:4000/user/practice HTTP/1.1
+
+    
