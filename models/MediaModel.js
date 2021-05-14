@@ -9,7 +9,7 @@ const Media = db.define("media", {
     allowNull: false,
   },
   media: {
-    type: DataTypes.STRING,
+    type: DataTypes.ARRAY(DataTypes.TEXT),
     allowNull: false,
   },
   title: {
