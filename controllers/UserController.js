@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const { UniqueConstraintError } = require("sequelize");
 const { validateJWT } = require("../middleware");
-const { User } = require("../models");
+const { User, Comments, Media } = require("../models");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -24,7 +24,6 @@ router.get("/", validateJWT, (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     let user = await User.findByPk(req.params.id);
-
     let { id, username, firstName, lastName } = user;
 
     res.status(200).json({
@@ -54,7 +53,7 @@ router.post("/login", (req, res) => {
         if (bcrypt.compareSync(password, user.password)) {
           //password matches
           let token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
-            //The token is being created right here, it takes the jwt module and uses the .sign() along with my unique secret to create a unique token for this user. The token is then used to verify authorization and allow access to restricted routes for the user.  
+          //The token is being created right here, it takes the jwt module and uses the .sign() along with my unique secret to create a unique token for this user. The token is then used to verify authorization and allow access to restricted routes for the user.
           res.status(200).json({
             message: "User successfully logged in",
             token,
@@ -95,10 +94,10 @@ router.post("/register", (req, res) => {
       email,
       firstName,
       lastName,
-      isAdmin: false
+      isAdmin: false,
     })
       .then((user) => {
-        console.log(user)
+        console.log(user);
         let token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
           expiresIn: "24h",
         });
@@ -122,6 +121,5 @@ router.post("/register", (req, res) => {
     res.status(500).json({ error });
   }
 });
-
 
 module.exports = router;
