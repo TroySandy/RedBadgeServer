@@ -17,27 +17,28 @@ router.get("/", validateJWT, (req, res) => {
       firstName: req.user.firstName,
       lastName: req.user.lastName,
       username: req.user.username,
+      isAdmin: req.user.isAdmin,
     },
   });
 });
-//troy
-router.get("/:id", async (req, res) => {
-  try {
-    let user = await User.findByPk(req.params.id);
-    let { id, username, firstName, lastName } = user;
 
-    res.status(200).json({
-      id,
-      username,
-      firstName,
-      lastName,
-    });
-  } catch (error) {
-    res.status(500).json({
-      message: error,
-    });
-  }
-});
+// router.get("/:id", async (req, res) => {
+//   try {
+//     let user = await User.findByPk(req.params.id);
+//     let { id, username, firstName, lastName } = user;
+
+//     res.status(200).json({
+//       id,
+//       username,
+//       firstName,
+//       lastName,
+//     });
+//   } catch (error) {
+//     res.status(500).json({
+//       message: error,
+//     });
+//   }
+// });
 
 router.post("/login", (req, res) => {
   const { username, password } = req.body;
@@ -107,6 +108,7 @@ router.post("/register", (req, res) => {
           token,
           user,
         });
+        
       })
       .catch((err) => {
         if (typeof err === UniqueConstraintError) {
