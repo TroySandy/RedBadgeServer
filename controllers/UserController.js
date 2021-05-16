@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const { UniqueConstraintError } = require("sequelize");
 const { validateJWT } = require("../middleware");
-const { User, Comments, Media } = require("../models");
+const { User } = require("../models");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -108,7 +108,6 @@ router.post("/register", (req, res) => {
           token,
           user,
         });
-        
       })
       .catch((err) => {
         if (typeof err === UniqueConstraintError) {
