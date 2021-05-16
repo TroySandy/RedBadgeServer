@@ -14,7 +14,7 @@ const Comments = db.define("comments", {
   },
   heading: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: true,
   },
   rating: {
     type: DataTypes.DECIMAL,

@@ -7,7 +7,7 @@ router.get("/practice", (req, res) => {
   res.send("Hey!! This is a practice route!!");
 });
 
-router.get("/comments", async (req, res) => {
+router.get("/", async (req, res) => {
   // res.send("Hey!! This is a practice route!!");
   try {
     const allComments = await Comments.findAll().then((allComments) => {
@@ -18,7 +18,7 @@ router.get("/comments", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.post("/", async (req, res) => {
   const { userId } = req.body;
   try {
     const commentsUser = await Comments.findAll({
@@ -32,8 +32,8 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/", validateJWT, async (req, res) => {
-  const { comment, heading, rating, favorite, private, mediumId } = req.body;
+router.post("/create", validateJWT, async (req, res) => {
+  const { comment, heading, rating, favorite, private } = req.body;
   try {
     const newComment = await Comments.create({
       comment,
@@ -41,7 +41,6 @@ router.post("/", validateJWT, async (req, res) => {
       rating,
       favorite,
       private,
-      mediumId: mediumId,
       userId: req.user.id,
     });
     res.status(201).json({
@@ -75,7 +74,7 @@ router.put("/", validateJWT, async (req, res) => {
   }
 });
 
-//below we are using the validateJWT function, to verify that ther person who is trying to delete a review is logged in with a valid token from our validate function and that the review they are deleting is theirs. 
+//below we are using the validateJWT function, to verify that ther person who is trying to delete a review is logged in with a valid token from our validate function and that the review they are deleting is theirs.
 router.delete("/", validateJWT, async (req, res) => {
   const { id } = req.body;
   try {
@@ -90,7 +89,5 @@ router.delete("/", validateJWT, async (req, res) => {
     res.status(500).json({ message: "Failed Task" });
   }
 });
-
-
 
 module.exports = router;

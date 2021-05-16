@@ -1,28 +1,36 @@
 const db = require("../db");
 const { DataTypes } = require("sequelize");
 
-const Media = db.define("media", {
+const UnsplashMedia = db.define("unsplashMedia", {
   id: {
     type: DataTypes.UUID,
     primaryKey: true,
     defaultValue: DataTypes.UUIDV4,
     allowNull: false,
   },
-  image: {
+  blurhash: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  imageSecure: {
+  url_regular: {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  thumbnail: {
+  url_thumb: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
-  tags: {
-    type: DataTypes.ARRAY(DataTypes.STRING),
-    allowNull: false,
+  artist: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  artist_image: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  portfolio_url: {
+    type: DataTypes.STRING,
+    allowNull: true,
   },
 
   private: {
@@ -31,4 +39,4 @@ const Media = db.define("media", {
   },
 });
 
-module.exports = Media;
+module.exports = UnsplashMedia;
