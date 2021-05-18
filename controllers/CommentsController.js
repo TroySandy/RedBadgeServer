@@ -1,13 +1,13 @@
 const router = require("express").Router();
 const { validateJWT } = require("../middleware");
-const { Comments } = require("../models");
+const { Comments, Media, UnsplashModel, User } = require("../models");
 const jwt = require("jsonwebtoken");
 
 router.get("/practice", (req, res) => {
   res.send("Hey!! This is a practice route!!");
 });
 
-router.get("/", async (req, res) => {
+router.get("/all", async (req, res) => {
   // res.send("Hey!! This is a practice route!!");
   try {
     const allComments = await Comments.findAll().then((allComments) => {
@@ -18,7 +18,29 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", validateJWT, async (req, res) => {
+  const { userId } = req.user.id;
+  try {
+    const allComments = await User.findAll({
+      where: { userId },
+      include: [
+        {
+          model: Comments,
+          include: [{ model: Media }],
+        },
+      ],
+    }).then((res) => {
+      res.status(200).json({
+        allComments,
+      });
+      console.log(allComments);
+    });
+  } catch (err) {
+    res.status;
+  }
+});
+
+router.post("/comment", async (req, res) => {
   const { userId } = req.body;
   try {
     const commentsUser = await Comments.findAll({
@@ -33,7 +55,7 @@ router.post("/", async (req, res) => {
 });
 
 router.post("/create", validateJWT, async (req, res) => {
-  const { comment, heading, rating, favorite, private } = req.body;
+  const { comment, heading, rating, favorite, private, mediumId } = req.body;
   try {
     const newComment = await Comments.create({
       comment,
@@ -42,9 +64,9 @@ router.post("/create", validateJWT, async (req, res) => {
       favorite,
       private,
       userId: req.user.id,
+      mediumId,
     });
     res.status(201).json({
-      message: "Comment created",
       newComment,
     });
   } catch (err) {
