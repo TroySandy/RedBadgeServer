@@ -70,7 +70,7 @@ router.post("/register", (req, res) => {
       email,
       firstName,
       lastName,
-      isAdmin: true,
+      isAdmin: false,
     })
       .then((user) => {
         console.log(user);
