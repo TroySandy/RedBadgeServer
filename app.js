@@ -8,18 +8,20 @@ const middlewares = require("./middleware");
 app.use(middlewares.CORS);
 app.use(Express.json());
 
-
-app.use("/media", controllers.Media);
+app.use("/admin", controllers.Admin);
 app.use("/user", controllers.User);
-app.use('/comments', controllers.Comments);
-app.use('/admin', controllers.Admin)
+app.use("/comments", controllers.Comments);
+app.use("/media", controllers.Media);
+// app.use("/unsplash", controllers.Unsplash);
 
 dbConnection
   .authenticate()
-  .then(() => dbConnection.sync(
-    {alter: true}
-    // {force: true}
-    ))
+  .then(() =>
+    dbConnection.sync(
+      { alter: true }
+      // { force: true }
+    )
+  )
   .then(() => {
     app.listen(process.env.PORT, () => {
       console.log(`[Server]: App is listening on ${process.env.PORT}.`);
