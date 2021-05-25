@@ -22,24 +22,6 @@ router.get("/", validateJWT, (req, res) => {
   });
 });
 
-// router.get("/:id", async (req, res) => {
-//   try {
-//     let user = await User.findByPk(req.params.id);
-//     let { id, username, firstName, lastName } = user;
-
-//     res.status(200).json({
-//       id,
-//       username,
-//       firstName,
-//       lastName,
-//     });
-//   } catch (error) {
-//     res.status(500).json({
-//       message: error,
-//     });
-//   }
-// });
-
 router.post("/login", (req, res) => {
   const { username, password } = req.body;
 
@@ -50,25 +32,20 @@ router.post("/login", (req, res) => {
       },
     })
       .then((user) => {
-        //compare password
         if (bcrypt.compareSync(password, user.password)) {
-          //password matches
           let token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
-          //The token is being created right here, it takes the jwt module and uses the .sign() along with my unique secret to create a unique token for this user. The token is then used to verify authorization and allow access to restricted routes for the user.
           res.status(200).json({
             message: "User successfully logged in",
             token,
             user,
           });
         } else {
-          //invalid password
           res.status(401).json({
             error: "Invalid username or password.",
           });
         }
       })
       .catch((err) => {
-        //invalid username
         res.status(401).json({
           error: "Invalid username or password.",
         });

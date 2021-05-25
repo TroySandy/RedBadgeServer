@@ -95,7 +95,6 @@ router.put("/", validateJWT, async (req, res) => {
   }
 });
 
-//below we are using the validateJWT function, to verify that ther person who is trying to delete a review is logged in with a valid token from our validate function and that the review they are deleting is theirs.
 router.delete("/", validateJWT, async (req, res) => {
   const { id } = req.body;
   try {

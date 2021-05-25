@@ -31,7 +31,6 @@ router.post("/photo", validateJWT, async (req, res) => {
       res.status(201).json({ photo: photo });
     });
   } catch (err) {
-    // res.status(500).json({ error: `Failed to retrieve media: ${err}` });
     console.log(err);
   }
 });
