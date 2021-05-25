@@ -10,22 +10,49 @@ const Media = db.define("media", {
   },
   image: {
     type: DataTypes.STRING,
-    allowNull: false,
-  },
-  imageSecure: {
-    type: DataTypes.STRING,
     allowNull: true,
   },
   thumbnail: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
-  tags: {
-    type: DataTypes.ARRAY(DataTypes.STRING),
-    allowNull: false,
+  blur_hash: {
+    type: DataTypes.STRING,
+    allowNull: true,
   },
-
+  url_thumb: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  url_small: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  url_reg: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  url_raw: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  artist_name: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  artist_img: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  portfolio_url: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   private: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+  },
+  favorite: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
   },
