@@ -85,9 +85,7 @@ router.post("/login", (req, res) => {
 
 router.post("/register", (req, res) => {
   const { username, password, email, firstName, lastName } = req.body;
-
   console.log(req.body);
-
   try {
     User.create({
       username,
@@ -120,6 +118,21 @@ router.post("/register", (req, res) => {
   } catch (error) {
     //console.log(error);
     res.status(500).json({ error });
+  }
+});
+
+router.delete("/admin", async (req, res) => {
+  const { id } = req.body;
+  try {
+    const query = {
+      where: {
+        id: id,
+      },
+    };
+    await User.destroy(query);
+    res.status(200).json({ message: "User removed" });
+  } catch (err) {
+    res.status(500).json({ message: "Failed Task" });
   }
 });
 

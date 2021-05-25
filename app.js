@@ -12,7 +12,7 @@ app.use("/admin", controllers.Admin);
 app.use("/user", controllers.User);
 app.use("/comments", controllers.Comments);
 app.use("/media", controllers.Media);
-app.use("/unsplash", controllers.Unsplash);
+// app.use("/unsplash", controllers.Unsplash);
 
 dbConnection
   .authenticate()

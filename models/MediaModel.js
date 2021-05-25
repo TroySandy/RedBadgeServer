@@ -12,23 +12,11 @@ const Media = db.define("media", {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  imageSecure: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
   thumbnail: {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  tags: {
-    type: DataTypes.ARRAY(DataTypes.STRING),
-    allowNull: true,
-  },
-  blurhash: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  url_regular: {
+  blur_hash: {
     type: DataTypes.STRING,
     allowNull: true,
   },
@@ -36,11 +24,23 @@ const Media = db.define("media", {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  artist: {
+  url_small: {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  artist_image: {
+  url_reg: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  url_raw: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  artist_name: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  artist_img: {
     type: DataTypes.STRING,
     allowNull: true,
   },
@@ -49,6 +49,10 @@ const Media = db.define("media", {
     allowNull: true,
   },
   private: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+  },
+  favorite: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
   },

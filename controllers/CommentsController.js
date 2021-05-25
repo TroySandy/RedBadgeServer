@@ -7,7 +7,7 @@ router.get("/practice", (req, res) => {
   res.send("Hey!! This is a practice route!!");
 });
 
-router.get("/all", async (req, res) => {
+router.get("/all", validateJWT, async (req, res) => {
   // res.send("Hey!! This is a practice route!!");
   try {
     const allComments = await Comments.findAll().then((allComments) => {
@@ -40,7 +40,7 @@ router.post("/", validateJWT, async (req, res) => {
   }
 });
 
-router.post("/comment", async (req, res) => {
+router.post("/comment", validateJWT, async (req, res) => {
   const { userId } = req.body;
   try {
     const commentsUser = await Comments.findAll({
@@ -55,11 +55,10 @@ router.post("/comment", async (req, res) => {
 });
 
 router.post("/create", validateJWT, async (req, res) => {
-  const { comment, heading, rating, favorite, private, mediumId } = req.body;
+  const { comment, rating, favorite, private, mediumId } = req.body;
   try {
     const newComment = await Comments.create({
       comment,
-      heading,
       rating,
       favorite,
       private,
@@ -78,10 +77,10 @@ router.post("/create", validateJWT, async (req, res) => {
 });
 
 router.put("/", validateJWT, async (req, res) => {
-  const { comment, heading, rating, favorite, private, id } = req.body;
+  const { comment, rating, favorite, private, id } = req.body;
   try {
     await Comments.update(
-      { comment, heading, rating, favorite, private },
+      { comment, rating, favorite, private },
       { where: { id: id }, returning: true }
     ).then((comment) => {
       res.status(200).json({
@@ -98,6 +97,21 @@ router.put("/", validateJWT, async (req, res) => {
 
 //below we are using the validateJWT function, to verify that ther person who is trying to delete a review is logged in with a valid token from our validate function and that the review they are deleting is theirs.
 router.delete("/", validateJWT, async (req, res) => {
+  const { id } = req.body;
+  try {
+    const query = {
+      where: {
+        id: id,
+      },
+    };
+    await Comments.destroy(query);
+    res.status(200).json({ message: "Comment removed" });
+  } catch (err) {
+    res.status(500).json({ message: "Failed Task" });
+  }
+});
+
+router.delete("/admin", async (req, res) => {
   const { id } = req.body;
   try {
     const query = {
